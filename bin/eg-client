@@ -9,45 +9,24 @@ client.start()
 
   .then(function () {
 
-    // --- send 650.000 metrics per second
-    // --- received 550,000 metric per second
-    // --- dropped 100,000
-    //
-    // var count = 0;
-    //
-    // setInterval(function () {
-    //
-    //   console.log('sent', count, 'per second');
-    //   count = 0;
-    //
-    // }, 1000);
-    //
-    // function asap() {
-    //
-    //   client.increment('counter3');
-    //   count++;
-    //   setImmediate(asap);
-    //
-    // }
-    //
-    // asap();
-
-
-
     var count = 0;
+
     setInterval(function () {
-      console.log('sent count', count);
+
+      console.log('sent', count, 'per second');
       count = 0;
+
     }, 1000);
 
-    for (i = 0; i < 10; i++) {
+    function asap() {
 
-      setInterval(function () {
-        count++;
-        client.increment('counter3');
-      }, 0);
+      client.increment('counter');
+      count++;
+      setImmediate(asap);
 
     }
+
+    asap();
 
   })
 

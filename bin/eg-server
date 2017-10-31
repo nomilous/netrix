@@ -13,12 +13,11 @@ server.start()
 
       console.log(timestamp);
       console.log(metrics);
-      // console.log(raw);
       console.log();
 
     });
 
-    server.on('error', function () {
+    server.on('error', function (err) {
 
       // errors from datagram listener
 

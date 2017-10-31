@@ -32,32 +32,14 @@ describe('unit', function () {
         expect(instance._data).to.eql({
           raw: {
             c: {
-              'counter1.name': [
-                1,
-                1,
-                1,
-                1,
-                1
-              ],
-              'counter2.name': [
-                1,
-                1
-              ],
-              'netrix.bytes.received': [
-                168
-              ],
-              'netrix.frames.received': [
-                1
-              ],
-              'netrix.metrics.received': [
-                9
-              ]
+              'counter1.name': [1, 1, 1, 1, 1],
+              'counter2.name': [1, 1],
+              'netrix.bytes.received': [168],
+              'netrix.frames.received': [1],
+              'netrix.metrics.received': [9]
             },
             g: {
-              'gauge1.name': [
-                1.1234,
-                55.5432
-              ]
+              'gauge1.name': [1.1234, 55.5432]
             }
           }
         })

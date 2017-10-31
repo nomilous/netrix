@@ -1,7 +1,7 @@
 {
   "name": "netrix",
   "version": "1.0.0",
-  "description": "Metrics Aggregator",
+  "description": "Lightweight, pluggable metrics aggregator",
   "main": "index.js",
   "scripts": {
     "test": "mocha test",
