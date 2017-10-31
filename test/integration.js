@@ -14,7 +14,7 @@ describe('intergation', function () {
       port: 49494,
       flushInterval: 200
     });
-    this.server.on('flush', function (metrics) {
+    this.server.on('flush', function (timestamp, metrics) {
       _this.metrics.push(metrics);
     });
     return this.server.start();
@@ -83,7 +83,7 @@ describe('intergation', function () {
     }, 450); // into 3rd report (flush)
   });
 
-  it.only('counts metrics and messages', function (done) {
+  it('counts metrics and messages', function (done) {
     var _this = this;
 
     this.client.increment('counter.name');
@@ -103,23 +103,43 @@ describe('intergation', function () {
   });
 
 
-  it.only('gauges flush lag', function (done) {
-
-    var now = Date.now();
+  it('gauges flush lag', function (done) {
+    var _this = this;
 
     setTimeout(function () {
 
-      console.log(Date.now() - now);
-
+      expect(_this.metrics[0].gauges['netrix.flush.lag']).to.be.lessThan(10);
       done();
 
-    }, 1000);
+    }, 300);
 
   });
 
-  xit('can reset metrics', function (done) {
+  it('can reset metrics', function (done) {
+    var _this = this;
+
+    this.client.increment('counter.name');
+
+    setTimeout(function () {
+      _this.server.reset();
+      _this.metrics.length = 0;
+    }, 300);
+
+    setTimeout(function () {
+
+      expect(_this.metrics[0].counters).to.eql({
+        'netrix.bytes.received': 0,
+        'netrix.frames.received': 0,
+        'netrix.metrics.received': 0
+      });
+
+      expect(Object.keys(_this.metrics[0].gauges)).to.eql([
+        'netrix.flush.lag'
+      ]);
+
+      done();
+    }, 500);
 
   });
-
 
 });

@@ -5,44 +5,50 @@ var client = new Client({
   maxDatagram: 1024
 });
 
-client.start().then(function () {
+client.start()
 
-  // --- send 650.000 metrics per second
-  // --- received 550,000 metric per second
-  // --- dropped 100,000
-  //
-  // var count = 0;
-  //
-  // setInterval(function () {
-  //
-  //   console.log('sent', count, 'per second');
-  //   count = 0;
-  //
-  // }, 1000);
-  //
-  // function asap() {
-  //
-  //   client.increment('counter3');
-  //   count++;
-  //   setImmediate(asap);
-  //
-  // }
-  //
-  // asap();
+  .then(function () {
 
-  var count = 0;
-  setInterval(function () {
-    console.log('sent count', count);
-    count = 0;
-  }, 1000);
+    // --- send 650.000 metrics per second
+    // --- received 550,000 metric per second
+    // --- dropped 100,000
+    //
+    // var count = 0;
+    //
+    // setInterval(function () {
+    //
+    //   console.log('sent', count, 'per second');
+    //   count = 0;
+    //
+    // }, 1000);
+    //
+    // function asap() {
+    //
+    //   client.increment('counter3');
+    //   count++;
+    //   setImmediate(asap);
+    //
+    // }
+    //
+    // asap();
 
-  for (i = 0; i < 60; i++) {
 
+
+    var count = 0;
     setInterval(function () {
-      count++;
-      client.increment('counter3');
-    }, 0);
+      console.log('sent count', count);
+      count = 0;
+    }, 1000);
 
-  }
+    for (i = 0; i < 60; i++) {
 
-});
+      setInterval(function () {
+        count++;
+        client.increment('counter3');
+      }, 0);
+
+    }
+
+  })
+
+  .catch(console.error);

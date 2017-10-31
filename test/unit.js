@@ -43,6 +43,15 @@ describe('unit', function () {
               'counter2.name': [
                 1,
                 1
+              ],
+              'netrix.bytes.received': [
+                168
+              ],
+              'netrix.frames.received': [
+                1
+              ],
+              'netrix.metrics.received': [
+                9
               ]
             },
             g: {

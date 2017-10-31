@@ -5,12 +5,18 @@ var server = new Server({
   flushInterval: 1000
 });
 
-server.start().then(function () {
+server.start()
 
-  server.on('flush', function (metrics) {
+  .then(function () {
 
-    console.log(metrics);
+    server.on('flush', function (timestamp, metrics) {
 
-  });
+      console.log(timestamp);
+      console.log(metrics);
+      console.log();
 
-});
+    });
+
+  })
+
+  .catch(console.error);
