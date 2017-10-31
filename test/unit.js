@@ -4,8 +4,6 @@ var Server = require('../').Server;
 
 describe('unit', function () {
 
-  xit('counts metrics and messages');
-  xit('gauges flush lag');
   xit('on error');
 
   context('server', function () {

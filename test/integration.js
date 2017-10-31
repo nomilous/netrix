@@ -38,59 +38,55 @@ describe('intergation', function () {
     return this.server.stop();
   });
 
-  xit('emits collected and aggregated counter metrics', function (done) {
+  it('emits collected and aggregated counter metrics', function (done) {
     var _this = this;
-
-    var interval = setInterval(function () {
-      _this.client.increment('counter.name');
-    }, 1);
 
     setTimeout(function () {
-      clearInterval(interval);
-
-      expect(_this.metrics.length).to.be(5);
-
-      expect(
-        _this.metrics[0].counters['counter.name'] > 500 &&
-        _this.metrics[0].counters['counter.name'] < 1000
-      ).to.equal(true);
-
-      expect(
-        _this.metrics[1].counters['counter.name'] > 500 &&
-        _this.metrics[1].counters['counter.name'] < 1000
-      ).to.equal(true);
-
-      expect(
-        _this.metrics[2].counters['counter.name'] > 500 &&
-        _this.metrics[2].counters['counter.name'] < 1000
-      ).to.equal(true);
-
-      expect(
-        _this.metrics[3].counters['counter.name'] > 500 &&
-        _this.metrics[3].counters['counter.name'] < 1000
-      ).to.equal(true);
-
-      expect(
-        _this.metrics[4].counters['counter.name'] > 500 &&
-        _this.metrics[4].counters['counter.name'] < 1000
-      ).to.equal(true);
+      // scaled up to per second from per 200ms
+      expect(_this.metrics[0].counters).to.eql({'counter.name': 5});
+      expect(_this.metrics[1].counters).to.eql({'counter.name': 0});
+      expect(_this.metrics[2].counters).to.eql({'counter.name': 15});
 
       done();
-    }, 1100);
+    }, 700); // encapsulates 3 x 200ms (flushInterval)
+
+    setTimeout(function () {
+      _this.client.increment('counter.name');
+    }, 100); // into first report (flush)
+
+    setTimeout(function () {
+      _this.client.increment('counter.name');
+      _this.client.increment('counter.name');
+      _this.client.increment('counter.name');
+    }, 450); // into 3rd report (flush)
   });
 
-  xit('emits collected and aggregated gauge metrics', function (done) {
-
+  it.only('emits collected and aggregated gauge metrics', function (done) {
     var _this = this;
 
-    var interval = setInterval(function () {
-      _this.client.gauge('counter.name');
-    }, 1);
+    setTimeout(function () {
+      console.log(_this.metrics);
 
+      done();
+    });
+
+    setTimeout(function () {
+      _this.client.gauge('gauge.name');
+    }, 100); // into first report (flush)
+
+    setTimeout(function () {
+      _this.client.gauge('gauge.name');
+      _this.client.gauge('gauge.name');
+      _this.client.gauge('gauge.name');
+    }, 450); // into 3rd report (flush)
   });
+
+  xit('counts metrics and messages');
+  xit('gauges flush lag');
 
   xit('can reset metrics', function (done) {
 
   });
+
 
 });
