@@ -1,0 +1,16 @@
+#!/usr/bin/env node
+
+var Server = require('../').Server;
+var server = new Server({
+  flushInterval: 200
+});
+
+server.start().then(function () {
+
+  server.on('flush', function (metrics) {
+
+    console.log(metrics.counters);
+
+  });
+
+});

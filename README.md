@@ -1,2 +1,3 @@
 # netrix
-Metrics Aggregator
+
+Metrics Aggregator, loosely modeled on [statsd](https://github.com/etsy/statsd)
