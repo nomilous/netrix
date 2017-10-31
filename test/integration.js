@@ -15,7 +15,7 @@ describe('intergation', function () {
       flushInterval: 200
     });
     this.server.on('flush', function (metrics) {
-      _this.metrics.push(metrics.counters);
+      _this.metrics.push(metrics);
     });
     return this.server.start();
   });
@@ -38,7 +38,7 @@ describe('intergation', function () {
     return this.server.stop();
   });
 
-  it('emits collected and aggregated counter metrics', function (done) {
+  xit('emits collected and aggregated counter metrics', function (done) {
     var _this = this;
 
     var interval = setInterval(function () {
@@ -51,28 +51,28 @@ describe('intergation', function () {
       expect(_this.metrics.length).to.be(5);
 
       expect(
-        _this.metrics[0]['counter.name'] > 500 &&
-        _this.metrics[0]['counter.name'] < 1000
+        _this.metrics[0].counters['counter.name'] > 500 &&
+        _this.metrics[0].counters['counter.name'] < 1000
       ).to.equal(true);
 
       expect(
-        _this.metrics[1]['counter.name'] > 500 &&
-        _this.metrics[1]['counter.name'] < 1000
+        _this.metrics[1].counters['counter.name'] > 500 &&
+        _this.metrics[1].counters['counter.name'] < 1000
       ).to.equal(true);
 
       expect(
-        _this.metrics[2]['counter.name'] > 500 &&
-        _this.metrics[2]['counter.name'] < 1000
+        _this.metrics[2].counters['counter.name'] > 500 &&
+        _this.metrics[2].counters['counter.name'] < 1000
       ).to.equal(true);
 
       expect(
-        _this.metrics[3]['counter.name'] > 500 &&
-        _this.metrics[3]['counter.name'] < 1000
+        _this.metrics[3].counters['counter.name'] > 500 &&
+        _this.metrics[3].counters['counter.name'] < 1000
       ).to.equal(true);
 
       expect(
-        _this.metrics[4]['counter.name'] > 500 &&
-        _this.metrics[4]['counter.name'] < 1000
+        _this.metrics[4].counters['counter.name'] > 500 &&
+        _this.metrics[4].counters['counter.name'] < 1000
       ).to.equal(true);
 
       done();
@@ -80,6 +80,12 @@ describe('intergation', function () {
   });
 
   xit('emits collected and aggregated gauge metrics', function (done) {
+
+    var _this = this;
+
+    var interval = setInterval(function () {
+      _this.client.gauge('counter.name');
+    }, 1);
 
   });
 
