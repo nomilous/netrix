@@ -4,23 +4,26 @@
 
 Lightweight, pluggable metrics aggregator, loosely modelled on [statsd](https://github.com/etsy/statsd).
 
+
+
 ```javascript
 const netrix = require('netrix');
 ```
 
-### class netrix.Server
 
-This class implements the metrics accumulator and aggregation server. It runs the UDP/datagram server to which all [netrix.Client]() instances send their metrics.
 
-#### new netrix.Server([options])
+## class netrix.Server
+
+This class implements the metrics accumulator and aggregation server. It runs the UDP/datagram server to which all [netrix.Client](#class-netrixclient) instances send their metrics.
+
+### new netrix.Server([options])
 
 * options <Object>
-  * ​
 * Returns <netrix.Server>
 
 
 
-#### Event 'xxx'
+### Event 'xxx'
 
 
 
@@ -66,7 +69,9 @@ x
 
 
 
-### class netrix.Client
+## class netrix.Client
+
+
 
 x
 
