@@ -18,10 +18,10 @@ This class implements the metrics accumulator and aggregation server. It runs th
 
 ### new netrix.Server([options])
 
-* `options` <Object>  Optional.
-  * `port` <number> Port upon. Default 49494.
-  * `flushInterval` <number> Interval at which metrics are aggregated and reported. Default 1000ms.
-* Returns <netrix.Server>
+* `options` \<Object>  Optional.
+  * `port` \<number> Port upon. Default 49494.
+  * `flushInterval` \<number> Interval at which metrics are aggregated and reported. Default 1000ms.
+* Returns \<netrix.Server>
 
 `netrix.Server` is an EventEmitter with the following events.
 
@@ -33,17 +33,17 @@ Emitted when an error occurs on the datagram server.
 
 ### Event: 'metric'
 
-* <string> Metric type 'c' or 'g' for `counter` or `gauge`.
-* <string> Metric name.
-* <number> Metric value.
+* \<string> Metric type 'c' or 'g' for `counter` or `gauge`.
+* \<string> Metric name.
+* \<number> Metric value.
 
 Emitted for every metric arriving from [netrix.Client](#class-netrixclient) instances.
 
 ### Event: 'flush'
 
-* <number> Timestamp.
-* <Object> Aggregated metrics.
-* <Object> Raw metrics. 
+* \<number> Timestamp.
+* \<Object> Aggregated metrics.
+* \<Object> Raw metrics. 
 
 Emitted at `flushInterval` and contains aggregated results from all metrics accumulated since the previous flush.
 
