@@ -51,7 +51,7 @@ The `counter` metrics are scaled up or down to a per-second sample even if the `
 
 The `counter` metrics are reset to zero at each flush boundary so that the counting can resume appropriately.
 
-The `gauge` metric values are carried over the flush boundary unchanged.
+The `gauge` metric values remain unchanged until the client sends an update.
 
 Example metrics object:
 
@@ -83,7 +83,7 @@ Stops the server.
 
 ### server.reset()
 
-Removes all counters and gauges. Bear in mind that under normal operation once a counter or gauge is created it remains and is reported with each flush even if there was no change in value.
+Removes all counters and gauges. Bear in mind that under normal operation once a counter or gauge is created it remains in place and is reported with each flush even if there was no change in value.
 
 ## class netrix.Client
 
@@ -133,3 +133,4 @@ Each call to gauge() on the client will result in the corresponding guage data b
 * `customType` \<string> Not a guage ('g') or counter ('c').
 
 This allows for the sending of things other than gauge and counter metrics. The server ignores these. But they do cause the `metric` event to fire and they can be found in each `flush` event in the `raw` data.
+
