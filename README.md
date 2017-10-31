@@ -18,7 +18,7 @@ This class implements the metrics accumulator and aggregation server. It runs th
 
 ### new netrix.Server([options])
 
-* `options` <Object> Optional.
+* `options` <Object>  Optional.
   * `port` <number> Port upon. Default 49494.
   * `flushInterval` <number> Interval at which metrics are aggregated and reported. Default 1000ms.
 * Returns <netrix.Server>
@@ -27,7 +27,7 @@ This class implements the metrics accumulator and aggregation server. It runs th
 
 ### Event: 'error'
 
-* <Error>
+* \<Error>
 
 Emitted when an error occurs on the datagram server.
 
