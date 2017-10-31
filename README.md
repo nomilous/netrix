@@ -14,12 +14,12 @@ const netrix = require('netrix');
 
 ## class netrix.Server
 
-This class implements the metrics accumulator and aggregation server. It runs the UDP/datagram server to which all [netrix.Client](#class-netrixclient) instances send their metrics.
+This class implements the metrics accumulator and aggregation server. It runs the UDP/datagram server to which all [netrix.Client](#class-netrixclient) instances send their metrics. See `bin/eg-server`.
 
 ### new netrix.Server([options])
 
 * `options` \<Object>  Optional.
-  * `port` \<number> Port upon. Default 49494.
+  * `port` \<number> Listen UPD port. Default 49494.
   * `flushInterval` \<number> Interval at which metrics are aggregated and reported. Default 1000ms.
 * Returns \<netrix.Server>
 
@@ -64,46 +64,72 @@ Example metrics object:
     counter1: 481618 // user counter from client.increment('counter1');
   },
   gauges: {
-    'netrix.flush.lag': 3 // builtin, flush timer lag
+    'netrix.flush.lag': 3 // builtin, flush timer lag ms
   }
 }
 ```
 
-  
+### server.start()
 
- 
+* Returns \<Promise>
 
+Starts the server.
 
+### server.stop()
 
+* Returns \<Promise>
 
+Stops the server.
+
+### server.reset()
+
+Removes all counters and gauges. Bear in mind that under normal operation once a counter or gauge is created it remains and is reported with each flush even if there was no change in value.
 
 ## class netrix.Client
 
+See `bin/eg-client`.
 
+### new netrix.Client([options])
 
-x
+* `options` \<Object> Optional.
+  * `host` \<string> Hostname of the server. Default 'localhost'
+  * `port` \<number> Server port. Default 49494.
+  * `flushInterval` \<number> Efficienttly accumulate metrics before sending every default 50ms.
+  * `maxDatagram` \<number> Multiple metrics sent in each datagram. Limits size. Default 1024 bytes.
+* Returns \<netrix.Client>
 
-x
+`maxDatagram` can theoretically be set as high as 65507 bytes BUT large datagrams simply vanished on OSX laptop. If you decide to deviate from the default do some in-situ benchmarking to determine your sweetspot.
 
-x
+### client.start()
 
-x
+* Returns \<Promise>
 
-x
+Start the client.
 
-x
+### client.stop()
 
-x
+* Return \<Promise>
 
-x
+Stop the client.
 
-x
+### client.increment(metricName[, value])
 
-x
+* `metricName` \<string> For example 'service1.login.failures'.
+* `value` <number> Optional. Defaults incrementing counter by 1.
 
-x
+Each call to increment() on the client will result in the counter being incremented at the server. Once the server arrives at the flush boundary the total will be reported in the `flush` event and the counter will be set back to zero at the server.
 
-x
+### client.gauge(metricName, value)
 
+* `metricName` \<string> For example 'host1.cpu.percent_idle'
+* `value` <number> The percentage idle.
 
+Each call to gauge() on the client will result in the corresponding guage data being accumulated at the server. These accumulated values will be averaged and reported in the `flush` event.
 
+### client.metric(metricName, value, customTypeCode)
+
+* `metricName`
+* `value`
+* `customType` \<string> Not a guage ('g') or counter ('c').
+
+This allows for the sending of things other than gauge and counter metrics. The server ignores these. But they do cause the `metric` event to fire and they can be found in each `flush` event in the `raw` data.

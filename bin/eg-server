@@ -13,6 +13,7 @@ server.start()
 
       console.log(timestamp);
       console.log(metrics);
+      // console.log(raw);
       console.log();
 
     });
