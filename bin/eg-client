@@ -40,7 +40,7 @@ client.start()
       count = 0;
     }, 1000);
 
-    for (i = 0; i < 60; i++) {
+    for (i = 0; i < 10; i++) {
 
       setInterval(function () {
         count++;

@@ -4,8 +4,6 @@ var Server = require('../').Server;
 
 describe('unit', function () {
 
-  xit('on error');
-
   context('server', function () {
 
     context('_onMessage', function () {
@@ -14,7 +12,8 @@ describe('unit', function () {
         var instance = {
           _data: {
             raw: {}
-          }
+          },
+          emit: function () {}
         }
 
         var data =
@@ -248,7 +247,7 @@ describe('unit', function () {
             dataArray
           );
 
-          expect(result).to.eql(['111\n222\n333\n444'])
+          expect(result).to.eql(['111\n222\n333\n444']);
         }
       );
 
@@ -270,11 +269,11 @@ describe('unit', function () {
           );
 
           expect(result).to.eql([
-            '111\n222\n',
-            '333\n444\n',
-            '555\n666\n',
-            '777\n888\n',
-            '999\n1010\n',
+            '111\n222',
+            '333\n444',
+            '555\n666',
+            '777\n888',
+            '999\n1010',
             '1111'
           ]);
 

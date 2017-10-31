@@ -9,11 +9,24 @@ server.start()
 
   .then(function () {
 
-    server.on('flush', function (timestamp, metrics) {
+    server.on('flush', function (timestamp, metrics, raw) {
 
       console.log(timestamp);
       console.log(metrics);
+      // console.log(raw);
       console.log();
+
+    });
+
+    server.on('error', function () {
+
+      // errors from datagram listener
+
+    });
+
+    server.on('metric', function (type, name, value) {
+
+      // console.log('received', type, name, value);
 
     });
 
