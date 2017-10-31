@@ -2,14 +2,14 @@
 
 var Server = require('../').Server;
 var server = new Server({
-  flushInterval: 200
+  flushInterval: 1000
 });
 
 server.start().then(function () {
 
   server.on('flush', function (metrics) {
 
-    console.log(metrics.counters);
+    console.log(metrics);
 
   });
 

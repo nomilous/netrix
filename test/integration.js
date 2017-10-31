@@ -43,9 +43,9 @@ describe('intergation', function () {
 
     setTimeout(function () {
       // scaled up to per second from per 200ms
-      expect(_this.metrics[0].counters).to.eql({'counter.name': 5});
-      expect(_this.metrics[1].counters).to.eql({'counter.name': 0});
-      expect(_this.metrics[2].counters).to.eql({'counter.name': 15});
+      expect(_this.metrics[0].counters['counter.name']).to.equal(5);
+      expect(_this.metrics[1].counters['counter.name']).to.equal(0);
+      expect(_this.metrics[2].counters['counter.name']).to.equal(15);
 
       done();
     }, 700); // encapsulates 3 x 200ms (flushInterval)
@@ -61,28 +61,61 @@ describe('intergation', function () {
     }, 450); // into 3rd report (flush)
   });
 
-  it.only('emits collected and aggregated gauge metrics', function (done) {
+  it('emits collected and aggregated gauge metrics', function (done) {
     var _this = this;
 
     setTimeout(function () {
-      console.log(_this.metrics);
+      expect(_this.metrics[0].gauges['gauge.name']).to.equal(1.5);
+      expect(_this.metrics[1].gauges['gauge.name']).to.equal(1.5);
+      expect(_this.metrics[2].gauges['gauge.name']).to.equal(1.15);
 
       done();
-    });
+    }, 700); // encapsulates 3 x 200ms (flushInterval)
 
     setTimeout(function () {
-      _this.client.gauge('gauge.name');
+      _this.client.gauge('gauge.name', 1.5);
     }, 100); // into first report (flush)
 
     setTimeout(function () {
-      _this.client.gauge('gauge.name');
-      _this.client.gauge('gauge.name');
-      _this.client.gauge('gauge.name');
+      _this.client.gauge('gauge.name', 1.2);
+      _this.client.gauge('gauge.name', 1.1);
+      // _this.client.gauge('gauge.name', 1);
     }, 450); // into 3rd report (flush)
   });
 
-  xit('counts metrics and messages');
-  xit('gauges flush lag');
+  it.only('counts metrics and messages', function (done) {
+    var _this = this;
+
+    this.client.increment('counter.name');
+    this.client.increment('counter.name');
+    this.client.increment('counter.name');
+    this.client.increment('counter.name');
+    this.client.increment('counter.name');
+
+    setTimeout(function () {
+      expect(_this.metrics[0].counters['netrix.bytes.received']).to.equal(420);
+      expect(_this.metrics[0].counters['netrix.frames.received']).to.equal(5);
+      expect(_this.metrics[0].counters['netrix.metrics.received']).to.equal(25);
+
+      done();
+    }, 300);
+
+  });
+
+
+  it.only('gauges flush lag', function (done) {
+
+    var now = Date.now();
+
+    setTimeout(function () {
+
+      console.log(Date.now() - now);
+
+      done();
+
+    }, 1000);
+
+  });
 
   xit('can reset metrics', function (done) {
 
