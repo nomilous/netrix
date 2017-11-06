@@ -1,6 +1,6 @@
 var expect = require('expect.js');
-var Client = require('../').Client;
-var Server = require('../').Server;
+var Client = require('../').NetrixClient;
+var Server = require('../').NetrixServer;
 
 describe('unit', function () {
 

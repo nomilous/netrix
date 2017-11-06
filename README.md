@@ -10,20 +10,26 @@ Lightweight, pluggable metrics aggregator, loosely modelled on [statsd](https://
 const netrix = require('netrix');
 ```
 
-
-
-## class netrix.Server
-
-This class implements the metrics accumulator and aggregation server. It runs the UDP/datagram server to which all [netrix.Client](#class-netrixclient) instances send their metrics. See `bin/eg-server`.
-
-### new netrix.Server([options])
+### netrix.createServer([options])
 
 * `options` \<Object>  Optional.
   * `port` \<number> Listen UPD port. Default 49494.
   * `flushInterval` \<number> Interval at which metrics are aggregated and reported. Default 1000ms.
-* Returns \<netrix.Server>
+* Returns \<Promise> Resolve with a running instance of 
 
-`netrix.Server` is an EventEmitter with the following events.
+## class NetrixServer
+
+```javascript
+const {NetrixServer} = require('netrix');
+```
+
+This class implements the metrics accumulator and aggregation server. It runs the UDP/datagram server to which all [NetrixClient](#class-netrixclient) instances send their metrics. See `bin/eg-server`.
+
+### new NetrixServer([options])
+
+`options` Same as `netrix.createServer([options])`
+
+`NetrixServer` is an EventEmitter with the following events.
 
 ### Event: 'error'
 
@@ -85,11 +91,11 @@ Stops the server.
 
 Removes all counters and gauges. Bear in mind that under normal operation once a counter or gauge is created it remains in place and is reported with each flush even if there was no change in value.
 
-## class netrix.Client
+## class NetrixClient
 
 See `bin/eg-client`.
 
-### new netrix.Client([options])
+### new NetrixClient([options])
 
 * `options` \<Object> Optional.
   * `host` \<string> Hostname of the server. Default 'localhost'

@@ -1,6 +1,6 @@
 var expect = require('expect.js');
-var Server = require('../').Server;
-var Client = require('../').Client;
+var Server = require('../').NetrixServer;
+var Client = require('../').NetrixClient;
 
 describe('intergation', function () {
 
