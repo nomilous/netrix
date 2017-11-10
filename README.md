@@ -6,6 +6,10 @@ Lightweight, pluggable metrics aggregator, loosely modelled on [statsd](https://
 
 
 
+**NOTE: UDP payloads. Loses metrics under heavy load.**
+
+
+
 ```javascript
 const netrix = require('netrix');
 ```
